@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es-AR" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjetas y ocasiones – Mailing List</title>
+    <link rel="stylesheet" href="./css/garde.css">
+    <link rel="stylesheet" href="https://use.typekit.net/gmr0viq.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'itc-avant-garde-gothic-pro', sans-serif;
+            background-color: #cc3b2e;
+        }
+        .mlist-field {
+            position: relative;
+            border-bottom: solid #fff .1rem;
+            background-color: inherit;
+        }
+        .mlist-field .mlist-email {
+            width: 100%;
+            padding-right: 26px;
+            border: none;
+            background-color: inherit;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: .1rem;
+        }
+        .mlist-field .mlist-email:focus {
+            outline: none;
+        }
+        .mlist-field .mlist-email::placeholder {
+            color: #fff;
+        }
+        .mlist-submit {
+            width: 26px;
+            margin: 0;
+            position: absolute;
+            right: 0rem;
+            top: 47.5%;
+            transform: translate(-0%, -50%);
+            border: none;
+            background-color: transparent;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: .3s;
+        }
+        .mlist-submit:hover {
+            opacity: .3;
+        }
+        .error {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            color: #fff;
+            font-size: .8rem;
+        }
+        .letter-replacement {
+            font-family: 'futura-pt', sans-serif;
+            font-size: 1.095rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="mlist-wrapper">
+        <form method="post" name="mlist-form" class="mlist-form" id="mlist-form" target="_parent">
+            <div class="mlist-field">
+                <input type="email" name="mlist-email" id="mlist-email" class="mlist-email" placeholder="Email..." required>
+                <input type="submit" class="mlist-submit" value=">">
+                <label class="error" id="error"></label>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById("mlist-email").oninvalid = function() {return validateEmail()}
+        document.getElementById("mlist-form").onsubmit = function() {return processForm()}
+        function validateEmail() {
+            var email = document.forms["mlist-form"]["mlist-email"].value;
+            if (email == "") {
+                document.getElementById("error").style.display = "block";
+                document.getElementById("error").innerHTML = "Llen<span class='letter-replacement'>á</span> este campo.";
+                document.forms["mlist-form"]["mlist-email"].disabled = "true";
+                document.forms["mlist-form"]["mlist-email"].placeholder = "";
+                document.forms["mlist-form"]["mlist-email"].value = "";
+                setTimeout(() => {
+                    document.forms["mlist-form"]["mlist-email"].disabled = false;
+                    document.forms["mlist-form"]["mlist-email"].placeholder = "Email...";
+                    document.getElementById("error").style.display = "none";
+                }, 5000);
+                return false;
+            }
+            document.getElementById("error").style.display = "block";
+            document.getElementById("error").innerHTML = "Ingres<span class='letter-replacement'>á</span> un correo electr<span class='letter-replacement'>ó</span>nico.";
+            document.forms["mlist-form"]["mlist-email"].disabled = "true";
+            document.forms["mlist-form"]["mlist-email"].placeholder = "";
+            document.forms["mlist-form"]["mlist-email"].value = "";
+            setTimeout(function() {
+                document.forms["mlist-form"]["mlist-email"].disabled = false;
+                document.forms["mlist-form"]["mlist-email"].placeholder = "Email...";
+                document.getElementById("error").style.display = "none";
+            }, 5000);
+            return false;
+        }
+        function processForm() {
+            document.forms["mlist-form"].action = "https://formspree.io/f/xaylapnk";
+        }
+    </script>
+</body>
+</html>
