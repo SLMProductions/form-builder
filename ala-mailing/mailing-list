@@ -29,6 +29,12 @@
         .mlist-field .mlist-email:focus {
             outline: none;
         }
+        .error {
+            position: absolute;
+            left: .5rem;
+            bottom: .5rem;
+            color: #900;
+        }
         .mlist-submit {
             position: absolute;
             right: 1rem;
@@ -87,8 +93,9 @@
 <body>
     <form method="POST" name="mlist-form" class="mlist-form" target="_parent" enctype="multipart/form-data">
         <div class="mlist-field">
-            <input type="email" name="mlist-email" id="mlist-email" class="mlist-email" required>
+            <input type="email" name="mlist-email" id="mlist-email" class="mlist-email" placeholder="Correo Electronico" required>
             <input type="submit" value="ENVIAR" class="mlist-submit">
+            <label for="mlist-email" class="error"></label>
         </div>
         <div class="terms">
             <a href="javascript:void(0)" class="open-terms"></a>
@@ -98,5 +105,17 @@
         </div>
         <input type="hidden" name="ref" value="alaBarca_standalone_website">
     </form>
+    <script>
+        document.getElementById("mlist-email").oninvalid = function() {return validateEmail()}
+        function validateEmail() {
+            var email = document.forms["mlist-form"]["mlist-email"].value;
+            if(email = "") {
+                document.getElementsByClassName("error")[0].innerHTML = "El campo 'Correo electrónico' es obligatorio.;
+                return false;
+            }
+            document.getElementsByClassName("error")[0].innerHTML = "Las direcciones de correo electrónico deben seguir el formato usuario@dominio.com.";
+            return false;
+        }
+    </script>
 </body>
 </html>
